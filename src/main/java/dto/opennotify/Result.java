@@ -1,4 +1,4 @@
-package dto;
+package dto.opennotify;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package dto;
+package dto.opennotify;
 
 /**
  * DTO for one single astronaut.
