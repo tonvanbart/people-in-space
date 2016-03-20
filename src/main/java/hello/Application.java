@@ -7,6 +7,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.Map;
+
+import dto.Astronaut;
+import dto.Result;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.groupingByConcurrent;
+import static java.util.stream.Collectors.joining;
+
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
@@ -19,7 +29,13 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
-        Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
-        log.info(quote.toString());
+        Result result = restTemplate.getForObject("http://api.open-notify.org/astros.json", Result.class);
+        log.debug(result.toString());
+        result.getPeople().stream()
+                .collect(groupingBy(Astronaut::getCraft))
+                .forEach((craft, astronauts) -> log.info("{} people in {}: {}", astronauts.size(), craft,
+                        astronauts.stream()
+                                .map(Astronaut::getName)
+                                .collect(joining(", "))));
     }
 }
