@@ -1,0 +1,18 @@
+<configuration>
+
+    <contextName>provisioning</contextName>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %logger{15} %-5level %m%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <root level="WARN">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <logger name="hello" level="DEBUG"/>
+
+</configuration>
